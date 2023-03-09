@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/skill-ovos-hello-world/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/9af53d8718526e0bea2bbb479321a4864e6bb77c...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3a1...HEAD)
+
+**Merged pull requests:**
+
+- Update dependencies to stable versions [\#3](https://github.com/OpenVoiceOS/skill-ovos-hello-world/pull/3) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.3a1](https://github.com/OpenVoiceOS/skill-ovos-hello-world/tree/V0.0.3a1) (2023-03-04)
+
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/9af53d8718526e0bea2bbb479321a4864e6bb77c...V0.0.3a1)
 
 **Merged pull requests:**
 
