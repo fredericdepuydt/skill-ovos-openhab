@@ -1,0 +1,3 @@
+[ovos.plugin.skill]
+skill-ovos-hello-world.openvoiceos=skill_ovos_hello_world:HelloWorldSkill
+
