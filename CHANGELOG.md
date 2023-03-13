@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/skill-ovos-hello-world/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3a1...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3a2...HEAD)
+
+**Merged pull requests:**
+
+- Add missing release\_skillstore.py [\#6](https://github.com/OpenVoiceOS/skill-ovos-hello-world/pull/6) ([NeonDaniel](https://github.com/NeonDaniel))
+- Update build tests to shared workflow and include manifest tests [\#5](https://github.com/OpenVoiceOS/skill-ovos-hello-world/pull/5) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.0.3a2](https://github.com/OpenVoiceOS/skill-ovos-hello-world/tree/V0.0.3a2) (2023-03-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3a1...V0.0.3a2)
 
 **Merged pull requests:**
 
