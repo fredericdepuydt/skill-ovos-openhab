@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/skill-ovos-hello-world/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3a2...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3...HEAD)
+
+**Implemented enhancements:**
+
+- Fix en-us language [\#7](https://github.com/OpenVoiceOS/skill-ovos-hello-world/pull/7) ([goldyfruit](https://github.com/goldyfruit))
+
+## [V0.0.3](https://github.com/OpenVoiceOS/skill-ovos-hello-world/tree/V0.0.3) (2023-03-13)
+
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-hello-world/compare/V0.0.3a2...V0.0.3)
 
 **Merged pull requests:**
 
