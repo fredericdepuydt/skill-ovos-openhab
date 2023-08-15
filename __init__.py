@@ -5,7 +5,7 @@ from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
 
-class HelloWorldSkill(OVOSSkill):
+class OpenHABSkill(OVOSSkill):
     def __init__(self, *args, **kwargs):
         """The __init__ method is called when the Skill is first constructed.
         Note that self.bus, self.skill_id, self.settings, and
