@@ -42,7 +42,7 @@ class OpenHABSkill(OVOSSkill):
     @intent_handler(IntentBuilder("ThankYouIntent").require("ThankYouKeyword"))
     def handle_thank_you_intent(self, message):
         """This is an Adapt intent handler, it is triggered by a keyword."""
-        self.speak_dialog("welcome")
+        self.speak_dialog("ItemNotFoundError")
 
     @intent_handler("HowAreYou.intent")
     def handle_how_are_you_intent(self, message):
