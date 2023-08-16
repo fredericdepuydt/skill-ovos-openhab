@@ -44,6 +44,13 @@ class OpenHABSkill(OVOSSkill):
         """This is an Adapt intent handler, it is triggered by a keyword."""
         self.speak_dialog("ItemNotFoundError")
 
+
+    @intent_handler(IntentBuilder("ListOpenHABItemsIntent").require("ListItemsKeyword"))
+    def handle_list_openhab_items_intent(self, message):
+        """This is an Adapt intent handler, it is triggered by a keyword."""
+        self.speak_dialog("ConfigurationNeeded")
+
+
     @intent_handler("HowAreYou.intent")
     def handle_how_are_you_intent(self, message):
         """This is a Padatious intent handler.
