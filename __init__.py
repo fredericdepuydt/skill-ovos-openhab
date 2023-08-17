@@ -28,6 +28,9 @@ class OpenHABSkill(OVOSSkill):
         self.auth = HTTPBasicAuth('frederic.depuydt@outlook.com', 'Dq40n!ZN6U54MwO33B7jbAbtnj7i9BMw')
         self.learning = True
 
+        ### Registration of Entities
+        self.register_entity_file('OnOffCommand.entity')
+
         self.lightingItemsDic = dict()
         self.switchableItemsDic = dict()
         self.currentTempItemsDic = dict()
@@ -88,7 +91,7 @@ class OpenHABSkill(OVOSSkill):
         self.speak_dialog("hello.world")
 
 
-    @intent_handler(IntentBuilder("OnOffCommandIntent").require("OnOffCommandKeyword").require("OnOffCommandRegex"))
+    @intent_handler('OnOffCommandIntent.intent')
     def handle_on_off_command_intent(self, message):
         self.speak_dialog('Hooray')
         pprint(vars(message))
