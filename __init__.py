@@ -29,8 +29,6 @@ class OpenHABSkill(OVOSSkill):
         self.learning = True
 
         
-        ### Registration of Entities
-        self.register_entity_file('onoffcommand.entity')
 
         self.lightingItemsDic = dict()
         self.switchableItemsDic = dict()
@@ -39,12 +37,14 @@ class OpenHABSkill(OVOSSkill):
         #self.currentThermostatItemsDic = dict()
         self.targetTemperatureItemsDic = dict()
         #self.homekitHeatingCoolingModeDic = dict()
-        
-        self.getTaggedItems()
+
 
 
     def initialize(self):
         self.log.info("Calling Initialize function")
+        self.getTaggedItems()
+        ### Registration of Entities
+        self.register_entity_file('onoffcommand.entity')
 
 
     @classproperty
