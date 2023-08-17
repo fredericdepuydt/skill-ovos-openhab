@@ -129,7 +129,12 @@ class OpenHABSkill(OVOSSkill):
         If not relevant to your skill, feel free to remove.
         """
         pass
-    
+
+    def sendCommandToItem(self, ohItem, command):
+        requestUrl = self.url+"/items/%s" % (ohItem)
+        req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
+        return req.status_code
+
     def findItemName(self, itemDictionary, messageItem):
 
         bestScore = 0
