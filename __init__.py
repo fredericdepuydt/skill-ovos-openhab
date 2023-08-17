@@ -91,7 +91,7 @@ class OpenHABSkill(OVOSSkill):
         self.speak_dialog("hello.world")
 
 
-    @intent_handler('OnOffCommandIntent.intent')
+    @intent_handler('OnOffCommand.intent')
     def handle_on_off_command_intent(self, message):
         self.speak_dialog('Hooray')
         pprint(vars(message))
