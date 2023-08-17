@@ -129,6 +129,6 @@ class OpenHABSkill(OVOSSkill):
                     self.speak_dialog('GetItemsListError')
             except KeyError:
                     pass
-            except ex as Exception :
+            except Exception as ex:
                     self.log.error("Exception thrown: " + str(ex))
                     self.speak_dialog('GetItemsListError')
