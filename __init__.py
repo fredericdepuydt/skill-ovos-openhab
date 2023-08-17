@@ -45,6 +45,7 @@ class OpenHABSkill(OVOSSkill):
         self.getTaggedItems()
         ### Registration of Entities
         self.register_entity_file('onoffcmd.entity')
+        self.register_entity_file('item.entity')
 
 
     @classproperty
