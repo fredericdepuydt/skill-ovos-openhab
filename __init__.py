@@ -44,7 +44,7 @@ class OpenHABSkill(OVOSSkill):
         self.log.info("Calling Initialize function")
         self.getTaggedItems()
         ### Registration of Entities
-        #self.register_entity_file('onoffcmd.entity')
+        self.register_entity_file('onoffcmd.entity')
 
 
     @classproperty
