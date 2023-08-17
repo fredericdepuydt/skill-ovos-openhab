@@ -108,26 +108,26 @@ class OpenHABSkill(OVOSSkill):
 
         ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)
 
-        if ohItem != None:
-            if "OVOS" in ohItem['tags']
-                if (command != "on") and (command != "off"):
-                    self.speak_dialog('ErrorDialog')
-                else:
-                    statusCode = self.sendCommandToItem(ohItem, command.upper())
-                    if statusCode == 200:
-                        self.speak_dialog('StatusOnOff', {'command': command, 'item': messageItem})
-                    elif statusCode == 404:
-                        self.log.error("Some issues with the command execution!. Item not found")
-                        self.speak_dialog('ItemNotFoundError')
-                    else:
-                        self.log.error("Some issues with the command execution!")
-                        self.speak_dialog('CommunicationError')
-            else:                
-                self.log.error("Item not allowed to be controlled!")
-                self.speak_dialog('ItemNotAllowedError')
-        else:
-            self.log.error("Item not found!")
-            self.speak_dialog('ItemNotFoundError')
+        #if ohItem != None:
+        #    if "OVOS" in ohItem['tags']
+        #        if (command != "on") and (command != "off"):
+        #            self.speak_dialog('ErrorDialog')
+        #        else:
+        #            statusCode = self.sendCommandToItem(ohItem, command.upper())
+        #            if statusCode == 200:
+        #                self.speak_dialog('StatusOnOff', {'command': command, 'item': messageItem})
+        #            elif statusCode == 404:
+        #                self.log.error("Some issues with the command execution!. Item not found")
+        #                self.speak_dialog('ItemNotFoundError')
+        #            else:
+        #                self.log.error("Some issues with the command execution!")
+        #                self.speak_dialog('CommunicationError')
+        #    else:                
+        #        self.log.error("Item not allowed to be controlled!")
+        #        self.speak_dialog('ItemNotAllowedError')
+        #else:
+        #    self.log.error("Item not found!")
+        #    self.speak_dialog('ItemNotFoundError')
 
     def stop(self):
         """Optional action to take when "stop" is requested by the user.
@@ -137,10 +137,10 @@ class OpenHABSkill(OVOSSkill):
         """
         pass
 
-    def sendCommandToItem(self, ohItem, command):
-        requestUrl = self.url + "/items/" + ohItem['label']
-        req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
-        return req.status_code
+    #def sendCommandToItem(self, ohItem, command):
+    #    requestUrl = self.url + "/items/" + ohItem['label']
+    #    req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
+    #    return req.status_code
 
     def findItemName(self, itemDictionary, messageItem):
         bestScore = 0
