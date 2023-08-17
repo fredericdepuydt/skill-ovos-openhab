@@ -125,10 +125,10 @@ class OpenHABSkill(OVOSSkill):
                         else:
                             pass
                 else:
-                    self.log.error("Some issues with the command execution!")
+                    self.log.error("HTTP " + str(req.status_code ))
                     self.speak_dialog('GetItemsListError')
             except KeyError:
                     pass
-            except Exception:
-                    self.log.error("Some issues with the command execution!")
+            except ex as Exception :
+                    self.log.error("Exception thrown: " + str(ex))
                     self.speak_dialog('GetItemsListError')
