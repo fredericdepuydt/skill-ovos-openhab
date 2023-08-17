@@ -1,2 +1,2 @@
-(turn|switch|put) {onoffcommand} {item}
-(turn|switch|put) {item} {onoffcommand}
+(turn|switch|put|toggle) {onoffcmd} {item}
+(turn|switch|put|toggle) {item} {onoffcmd}

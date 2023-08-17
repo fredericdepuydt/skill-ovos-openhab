@@ -44,7 +44,7 @@ class OpenHABSkill(OVOSSkill):
         self.log.info("Calling Initialize function")
         self.getTaggedItems()
         ### Registration of Entities
-        self.register_entity_file('onoffcommand.entity')
+        self.register_entity_file('onoffcmd.entity')
 
 
     @classproperty
@@ -100,7 +100,7 @@ class OpenHABSkill(OVOSSkill):
         self.speak_dialog('Hooray')
         pprint(vars(message))
         pprint(message)
-        command = message.data.get('onoffcommand')
+        command = message.data.get('onoffcmd')
         messageItem = message.data.get('item')
         self.log.info("ON-OFF COMMAND: " + str(messageItem) + " -> " + str(command))
 
@@ -143,7 +143,7 @@ class OpenHABSkill(OVOSSkill):
         pass
 
     def sendCommandToItem(self, ohItem, command):
-        requestUrl = self.url + "/items/" + ohItem['label']
+        requestUrl = self.url + "/items/" + ohItem['name']
         self.log.info("Command URL: " + requestUrl)
         req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
         return req.status_code
