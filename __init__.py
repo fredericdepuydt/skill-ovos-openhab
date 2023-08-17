@@ -108,7 +108,7 @@ class OpenHABSkill(OVOSSkill):
 
         ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)        
         if ohItem != None:
-            self.log.info("Best matched: " + ohItem['name'] + "(" + ohItem['label'] + ")" )
+            self.log.info("Best matched: " + ohItem['label'] + " (" + ohItem['name'] + ")" )
             if "OVOS" in ohItem['tags']:
                 if (command != "on") and (command != "off"):
                     self.speak_dialog('ErrorDialog')
@@ -149,6 +149,7 @@ class OpenHABSkill(OVOSSkill):
         try:
             for itemName, item in list(itemDictionary.items()):
                 score = fuzz.ratio(messageItem, item['label'], score_cutoff=bestScore)
+                self.log.info("Calculated score for '" + item['label'] + "': " + str(score))
                 if score > bestScore:
                     bestScore = score
                     bestItem = item
