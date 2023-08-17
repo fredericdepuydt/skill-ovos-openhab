@@ -97,8 +97,8 @@ class OpenHABSkill(OVOSSkill):
         pprint(vars(message))
         pprint(message)
         command = message.data.get('onoffCommand')
-        item = message.data.get('item')
-        self.log.info("ON-OFF COMMAND: " + str(item) + " -> " + str(command))
+        messageItem = message.data.get('item')
+        self.log.info("ON-OFF COMMAND: " + str(messageItem) + " -> " + str(command))
 
         
         #We have to find the item to update from our dictionaries
@@ -106,7 +106,7 @@ class OpenHABSkill(OVOSSkill):
         self.lightingSwitchableItemsDic.update(self.lightingItemsDic)
         self.lightingSwitchableItemsDic.update(self.switchableItemsDic)
 
-        ohItem = self.findItemName(self.lightingSwitchableItemsDic, item)
+        ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)
 
         if ohItem != None:
             if "OVOS" in ohItem['tags']
@@ -117,10 +117,10 @@ class OpenHABSkill(OVOSSkill):
                     if statusCode == 200:
                         self.speak_dialog('StatusOnOff', {'command': command, 'item': messageItem})
                     elif statusCode == 404:
-                        LOGGER.error("Some issues with the command execution!. Item not found")
+                        self.log.error("Some issues with the command execution!. Item not found")
                         self.speak_dialog('ItemNotFoundError')
                     else:
-                        LOGGER.error("Some issues with the command execution!")
+                        self.log.error("Some issues with the command execution!")
                         self.speak_dialog('CommunicationError')
             else:                
                 self.log.error("Item not allowed to be controlled!")
@@ -138,7 +138,7 @@ class OpenHABSkill(OVOSSkill):
         pass
 
     def sendCommandToItem(self, ohItem, command):
-        requestUrl = self.url+"/items/%s" % (ohItem)
+        requestUrl = self.url + "/items/" + ohItem['label']
         req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
         return req.status_code
 
@@ -147,11 +147,11 @@ class OpenHABSkill(OVOSSkill):
         score = 0
         bestItem = None
         try:
-            for itemName, itemLabel in list(itemDictionary.items()):
-                score = fuzz.ratio(messageItem, itemLabel, score_cutoff=bestScore)
+            for itemName, item in list(itemDictionary.items()):
+                score = fuzz.ratio(messageItem, item['label'], score_cutoff=bestScore)
                 if score > bestScore:
                     bestScore = score
-                    bestItem = itemName
+                    bestItem = item
         except KeyError:
             pass
         return bestItem
