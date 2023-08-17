@@ -1,2 +1,2 @@
-(turn|switch|put) {OnOffCommand} {item} now
-(turn|switch|put) {item} {OnOffCommand} now
+(turn|switch|put) {command} {item}
+(turn|switch|put) {item} {command}

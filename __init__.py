@@ -96,7 +96,7 @@ class OpenHABSkill(OVOSSkill):
         self.speak_dialog('Hooray')
         pprint(vars(message))
         pprint(message)
-        command = message.data.get('onoffcommand')
+        command = message.data.get('command')
         messageItem = message.data.get('item')
         self.log.info("ON-OFF COMMAND: " + str(messageItem) + " -> " + str(command))
 
