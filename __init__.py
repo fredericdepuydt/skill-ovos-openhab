@@ -95,32 +95,32 @@ class OpenHABSkill(OVOSSkill):
 
         
         #We have to find the item to update from our dictionaries
-        self.lightingSwitchableItemsDic = dict()
-        self.lightingSwitchableItemsDic.update(self.lightingItemsDic)
-        self.lightingSwitchableItemsDic.update(self.switchableItemsDic)
+        #self.lightingSwitchableItemsDic = dict()
+        #self.lightingSwitchableItemsDic.update(self.lightingItemsDic)
+        #self.lightingSwitchableItemsDic.update(self.switchableItemsDic)
 
-        ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)
+        #ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)
 
-        if ohItem != None:
-            if "OVOS" in ohItem['tags']
-                if (command != "on") and (command != "off"):
-                    self.speak_dialog('ErrorDialog')
-                else:
-                    statusCode = self.sendCommandToItem(ohItem, command.upper())
-                    if statusCode == 200:
-                        self.speak_dialog('StatusOnOff', {'command': command, 'item': messageItem})
-                    elif statusCode == 404:
-                        LOGGER.error("Some issues with the command execution!. Item not found")
-                        self.speak_dialog('ItemNotFoundError')
-                    else:
-                        LOGGER.error("Some issues with the command execution!")
-                        self.speak_dialog('CommunicationError')
-            else:                
-                LOGGER.error("Item not allowed to be controlled!")
-                self.speak_dialog('ItemNotAllowedError')
-        else:
-            LOGGER.error("Item not found!")
-            self.speak_dialog('ItemNotFoundError')
+        #if ohItem != None:
+        #    if "OVOS" in ohItem['tags']
+        #        if (command != "on") and (command != "off"):
+        #            self.speak_dialog('ErrorDialog')
+        #        else:
+        #            statusCode = self.sendCommandToItem(ohItem, command.upper())
+        #            if statusCode == 200:
+        #                self.speak_dialog('StatusOnOff', {'command': command, 'item': messageItem})
+        #            elif statusCode == 404:
+        #                LOGGER.error("Some issues with the command execution!. Item not found")
+        #                self.speak_dialog('ItemNotFoundError')
+        #            else:
+        #                LOGGER.error("Some issues with the command execution!")
+        #                self.speak_dialog('CommunicationError')
+        #    else:                
+        #        LOGGER.error("Item not allowed to be controlled!")
+        #        self.speak_dialog('ItemNotAllowedError')
+        #else:
+        #    LOGGER.error("Item not found!")
+        #    self.speak_dialog('ItemNotFoundError')
 
     def stop(self):
         """Optional action to take when "stop" is requested by the user.
@@ -130,27 +130,24 @@ class OpenHABSkill(OVOSSkill):
         """
         pass
 
-    def sendCommandToItem(self, ohItem, command):
-        requestUrl = self.url+"/items/%s" % (ohItem)
-        req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
-        return req.status_code
+    #def sendCommandToItem(self, ohItem, command):
+    #    requestUrl = self.url+"/items/%s" % (ohItem)
+    #    req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
+    #    return req.status_code
 
-    def findItemName(self, itemDictionary, messageItem):
-
-        bestScore = 0
-        score = 0
-        bestItem = None
-
-        try:
-            for itemName, itemLabel in list(itemDictionary.items()):
-                score = fuzz.ratio(messageItem, itemLabel, score_cutoff=bestScore)
-                if score > bestScore:
-                    bestScore = score
-                    bestItem = itemName
-        except KeyError:
-                    pass
-
-        return bestItem
+    #def findItemName(self, itemDictionary, messageItem):
+    #    bestScore = 0
+    #    score = 0
+    #    bestItem = None
+    #    try:
+    #        for itemName, itemLabel in list(itemDictionary.items()):
+    #            score = fuzz.ratio(messageItem, itemLabel, score_cutoff=bestScore)
+    #            if score > bestScore:
+    #                bestScore = score
+    #                bestItem = itemName
+    #    except KeyError:
+    #                pass
+    #    return bestItem
 
     def getTaggedItems(self):
         #find all the items tagged Lighting and Switchable from openHAB
