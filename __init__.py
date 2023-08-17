@@ -28,8 +28,9 @@ class OpenHABSkill(OVOSSkill):
         self.auth = HTTPBasicAuth('frederic.depuydt@outlook.com', 'Dq40n!ZN6U54MwO33B7jbAbtnj7i9BMw')
         self.learning = True
 
+        
         ### Registration of Entities
-        self.register_entity_file('OnOffCommand.entity')
+        self.register_entity_file('onoffcommand.entity')
 
         self.lightingItemsDic = dict()
         self.switchableItemsDic = dict()
@@ -38,9 +39,12 @@ class OpenHABSkill(OVOSSkill):
         #self.currentThermostatItemsDic = dict()
         self.targetTemperatureItemsDic = dict()
         #self.homekitHeatingCoolingModeDic = dict()
-
+        
         self.getTaggedItems()
 
+
+    def initialize(self):
+        self.log.info("Calling Initialize function")
 
 
     @classproperty
@@ -91,7 +95,7 @@ class OpenHABSkill(OVOSSkill):
         self.speak_dialog("hello.world")
 
 
-    @intent_handler('OnOffCommand.intent')
+    @intent_handler('onoffcommand.intent')
     def handle_on_off_command_intent(self, message):
         self.speak_dialog('Hooray')
         pprint(vars(message))
@@ -111,6 +115,7 @@ class OpenHABSkill(OVOSSkill):
             self.log.info("Best matched: " + ohItem['label'] + " (" + ohItem['name'] + ")" )
             if "OVOS" in ohItem['tags']:
                 if (command != "on") and (command != "off"):
+                    self.log.error("Invalid command: " + command)
                     self.speak_dialog('ErrorDialog')
                 else:
                     statusCode = self.sendCommandToItem(ohItem, command.upper())
@@ -149,7 +154,7 @@ class OpenHABSkill(OVOSSkill):
         bestItem = None
         try:
             for itemName, item in list(itemDictionary.items()):
-                score = fuzz.ratio(messageItem, item['label'], score_cutoff=bestScore)
+                score = fuzz.ratio(item['label'], messageItem, score_cutoff=bestScore)
                 self.log.info("Calculated score for '" + item['label'] + "': " + str(score))
                 if score > bestScore:
                     bestScore = score

@@ -1,2 +1,0 @@
-(turn|switch|put) {OnOffCommand} {Item}
-(turn|switch|put) {Item} {OnOffCommand}
