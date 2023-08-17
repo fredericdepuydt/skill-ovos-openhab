@@ -96,9 +96,9 @@ class OpenHABSkill(OVOSSkill):
         self.speak_dialog('Hooray')
         pprint(vars(message))
         pprint(message)
-        command = message.data.get('command')
-        messageItem = message.data.get('item')
-        self.log.info("ON-OFF COMMAND: " + str(messageItem) + " -> " + str(command))
+        command = message.data.get('OnOffCommand')
+        item = message.data.get('Item')
+        self.log.info("ON-OFF COMMAND: " + str(item) + " -> " + str(command))
 
         
         #We have to find the item to update from our dictionaries

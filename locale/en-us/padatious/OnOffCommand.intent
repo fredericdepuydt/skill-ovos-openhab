@@ -1,2 +1,2 @@
-(turn|switch|put) {qsdfqsd} {sdfsqdf}
-(turn|switch|put) {qsdfff} {sqdfqsdfqsddqfs}
+(turn|switch|put) {OnOffCommand} {Item}
+(turn|switch|put) {Item} {OnOffCommand}
