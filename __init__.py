@@ -81,4 +81,53 @@ class OpenHABSkill(OVOSSkill):
         If not relevant to your skill, feel free to remove.
         """
         pass
-        
+    
+    def getTaggedItems(self):
+        #find all the items tagged Lighting and Switchable from openHAB
+        #the labeled items are stored in dictionaries
+
+        self.lightingItemsDic = {}
+        self.switchableItemsDic = {}
+        self.currentTempItemsDic = {}
+        self.currentHumItemsDic = {}
+        self.currentThermostatItemsDic = {}
+        self.targetTemperatureItemsDic = {}
+        self.homekitHeatingCoolingModeDic = {}
+
+        if self.url == None:
+            self.log.error("Configuration needed!")
+            self.speak_dialog('ConfigurationNeeded')
+        else:            
+            requestUrl = self.url+"/items?recursive=false"
+
+            try: 
+                req = requests.get(requestUrl, headers=self.polling_headers, auth=self.auth)
+                if req.status_code == 200:
+                    json_response = req.json()
+                    self.log.info("Found " + str(len(json_response)) + " items in OpenHAB")
+                    for x in range(0,len(json_response)):
+                        
+                        if ("Lighting" in json_response[x]['tags']):
+                            self.lightingItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        elif ("Switchable" in json_response[x]['tags']):
+                            self.switchableItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        elif ("CurrentTemperature" in json_response[x]['tags']):
+                            self.currentTempItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        elif ("CurrentHumidity" in json_response[x]['tags']):
+                            self.currentHumItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        elif ("Thermostat" in json_response[x]['tags']):
+                            self.currentThermostatItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        elif ("TargetTemperature" in json_response[x]['tags']):
+                            self.targetTemperatureItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        elif ("homekit:HeatingCoolingMode" in json_response[x]['tags']):
+                            self.homekitHeatingCoolingModeDic.update({json_response[x]['name']: json_response[x]['label']})
+                        else:
+                            pass
+                else:
+                    self.log.error("Some issues with the command execution!")
+                    self.speak_dialog('GetItemsListError')
+            except KeyError:
+                    pass
+            except Exception:
+                    self.log.error("Some issues with the command execution!")
+                    self.speak_dialog('GetItemsListError')
