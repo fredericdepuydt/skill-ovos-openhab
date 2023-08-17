@@ -4,6 +4,8 @@ from ovos_utils.process_utils import RuntimeRequirements
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
+
+from rapidfuzz import fuzz
 import requests
 import json
 from requests.auth import HTTPBasicAuth
@@ -24,6 +26,15 @@ class OpenHABSkill(OVOSSkill):
         self.url = "http://openhab.automation:8080/rest"
         self.auth = HTTPBasicAuth('frederic.depuydt@outlook.com', 'Dq40n!ZN6U54MwO33B7jbAbtnj7i9BMw')
         self.learning = True
+
+        self.lightingItemsDic = dict()
+        self.switchableItemsDic = dict()
+        self.currentTempItemsDic = dict()
+        self.currentHumItemsDic = dict()
+        #self.currentThermostatItemsDic = dict()
+        self.targetTemperatureItemsDic = dict()
+        #self.homekitHeatingCoolingModeDic = dict()
+
         self.getTaggedItems()
 
 
@@ -75,6 +86,42 @@ class OpenHABSkill(OVOSSkill):
         self.log.info("There are five types of log messages: " "info, debug, warning, error, and exception.")
         self.speak_dialog("hello.world")
 
+
+    @intent_handler("onoff_command.intent")
+    def handle_onoff_status_intent(self, message):
+        command = message.data.get('Command')
+        messageItem = message.data.get('Item')
+        self.log.info("ON-OFF COMMAND: " + messageItem + " -> " + command)
+
+        
+        #We have to find the item to update from our dictionaries
+        self.lightingSwitchableItemsDic = dict()
+        self.lightingSwitchableItemsDic.update(self.lightingItemsDic)
+        self.lightingSwitchableItemsDic.update(self.switchableItemsDic)
+
+        ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)
+
+        if ohItem != None:
+            if "OVOS" in ohItem['tags']
+                if (command != "on") and (command != "off"):
+                    self.speak_dialog('ErrorDialog')
+                else:
+                    statusCode = self.sendCommandToItem(ohItem, command.upper())
+                    if statusCode == 200:
+                        self.speak_dialog('StatusOnOff', {'command': command, 'item': messageItem})
+                    elif statusCode == 404:
+                        LOGGER.error("Some issues with the command execution!. Item not found")
+                        self.speak_dialog('ItemNotFoundError')
+                    else:
+                        LOGGER.error("Some issues with the command execution!")
+                        self.speak_dialog('CommunicationError')
+            else:                
+                LOGGER.error("Item not allowed to be controlled!")
+                self.speak_dialog('ItemNotAllowedError')
+        else:
+            LOGGER.error("Item not found!")
+            self.speak_dialog('ItemNotFoundError')
+
     def stop(self):
         """Optional action to take when "stop" is requested by the user.
         This method should return True if it stopped something or
@@ -83,6 +130,23 @@ class OpenHABSkill(OVOSSkill):
         """
         pass
     
+    def findItemName(self, itemDictionary, messageItem):
+
+        bestScore = 0
+        score = 0
+        bestItem = None
+
+        try:
+            for itemName, itemLabel in list(itemDictionary.items()):
+                score = fuzz.ratio(messageItem, itemLabel, score_cutoff=bestScore)
+                if score > bestScore:
+                    bestScore = score
+                    bestItem = itemName
+        except KeyError:
+                    pass
+
+        return bestItem
+
     def getTaggedItems(self):
         #find all the items tagged Lighting and Switchable from openHAB
         #the labeled items are stored in dictionaries
@@ -108,20 +172,20 @@ class OpenHABSkill(OVOSSkill):
                     self.log.info("Found " + str(len(json_response)) + " items in OpenHAB")
                     for x in range(0,len(json_response)):
                         
-                        if ("Lighting" in json_response[x]['tags']):
-                            self.lightingItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                        if ("Lighting" in json_response[x]['tags'] or "Light" in json_response[x]['tags']):
+                            self.lightingItemsDic.update({json_response[x]['name']: json_response[x]})
                         elif ("Switchable" in json_response[x]['tags']):
-                            self.switchableItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                            self.switchableItemsDic.update({json_response[x]['name']: json_response[x]})
                         elif ("CurrentTemperature" in json_response[x]['tags']):
-                            self.currentTempItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                            self.currentTempItemsDic.update({json_response[x]['name']: json_response[x]})
                         elif ("CurrentHumidity" in json_response[x]['tags']):
-                            self.currentHumItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                            self.currentHumItemsDic.update({json_response[x]['name']: json_response[x]})
                         elif ("Thermostat" in json_response[x]['tags']):
-                            self.currentThermostatItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                            self.currentThermostatItemsDic.update({json_response[x]['name']: json_response[x]})
                         elif ("TargetTemperature" in json_response[x]['tags']):
-                            self.targetTemperatureItemsDic.update({json_response[x]['name']: json_response[x]['label']})
+                            self.targetTemperatureItemsDic.update({json_response[x]['name']: json_response[x]})
                         elif ("homekit:HeatingCoolingMode" in json_response[x]['tags']):
-                            self.homekitHeatingCoolingModeDic.update({json_response[x]['name']: json_response[x]['label']})
+                            self.homekitHeatingCoolingModeDic.update({json_response[x]['name']: json_response[x]})
                         else:
                             pass
                 else:
