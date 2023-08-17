@@ -3,6 +3,7 @@ from ovos_utils.intents import IntentBuilder
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
+from pprint import pprint
 
 
 from rapidfuzz import fuzz
@@ -90,6 +91,8 @@ class OpenHABSkill(OVOSSkill):
     @intent_handler("OnOffCommand.intent")
     def handle_on_off_command_intent(self, message):
         self.speak_dialog('Hooray')
+        pprint(vars(message))
+        pprint(message)
         command = message.data.get('Command')
         messageItem = message.data.get('Item')
         self.log.info("ON-OFF COMMAND: " + str(messageItem) + " -> " + str(command))
