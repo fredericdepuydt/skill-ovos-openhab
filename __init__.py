@@ -139,6 +139,7 @@ class OpenHABSkill(OVOSSkill):
 
     def sendCommandToItem(self, ohItem, command):
         requestUrl = self.url + "/items/" + ohItem['label']
+        self.log.info("Command URL: " + requestUrl)
         req = requests.post(requestUrl, data=command, headers=self.command_headers, auth=self.auth)
         return req.status_code
 
