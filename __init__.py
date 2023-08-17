@@ -21,7 +21,7 @@ class OpenHABSkill(OVOSSkill):
 
         self.command_headers = {"Content-type": "text/plain"}
         self.polling_headers = {"Accept": "application/json"}        
-        self.url = "http://openhab.automation:8080/rest/"
+        self.url = "http://openhab.automation:8080/rest"
         self.auth = HTTPBasicAuth('frederic.depuydt@outlook.com', 'Dq40n!ZN6U54MwO33B7jbAbtnj7i9BMw')
         self.learning = True
         self.getTaggedItems()
