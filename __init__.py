@@ -106,8 +106,9 @@ class OpenHABSkill(OVOSSkill):
         self.lightingSwitchableItemsDic.update(self.lightingItemsDic)
         self.lightingSwitchableItemsDic.update(self.switchableItemsDic)
 
-        ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)
+        ohItem = self.findItemName(self.lightingSwitchableItemsDic, messageItem)        
         if ohItem != None:
+            self.log.info("Best matched: " + ohItem['name'] + "(" + ohItem['label'] + ")" )
             if "OVOS" in ohItem['tags']:
                 if (command != "on") and (command != "off"):
                     self.speak_dialog('ErrorDialog')
